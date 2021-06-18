@@ -22,7 +22,7 @@ module.exports = botVersion, mode
 client.on('ready', async () => {
     console.log('ready')
     mongoose.set('useFindAndModify', false);
-    client.user.setActivity("S.A.M.! stonks?setup", { type: "PLAYING"});
+    client.user.setActivity("S.A.M.! stonks?setup\n Need help? https://discord.gg/QkzhehVhct", { type: "PLAYING"});
     new WOKCommands(client, {
         commandsDir: 'commands',
         featureDir: 'features'
