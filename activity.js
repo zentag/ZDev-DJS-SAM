@@ -11,7 +11,7 @@ const addActivity = async (guildId, client) => {
             console.log(err)
           }
           else{
-            const { activity, time, unconfactivity, messageOn } = docs
+            const { activity, time, unconfactivity, messageOn, messageContent } = docs
             const activityrate = (activity / time) * 60;
             const newactivityrate = ((unconfactivity + activity) / (time + 10)) * 60;
             if(newactivityrate > activityrate && messageOn == true){
@@ -29,7 +29,7 @@ const addActivity = async (guildId, client) => {
               }
 
               let channel = guild.channels.cache.get(docs.messageChannel || guild.systemChannelID || channelID);
-              channel.send("Poggers, your activity rate is above normal!")
+              channel.send(messageContent || "Poggers, your activity rate is above normal!")
             }
           }
         }
