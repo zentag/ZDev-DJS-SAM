@@ -104,7 +104,7 @@ module.exports = {
           })
         }
         if(value == collected.last()){
-          updateMessage(value.content)
+          updateMessage(value.content, guildId)
         }
     })
     message.channel.send("Setup process finished! Thanks for adding us. ")
@@ -135,7 +135,7 @@ module.exports = {
   },
 }
 
-async function updateMessage(message){
+async function updateMessage(message, guildId){
   await mongo().then(async (mongoose) => {
     try {
       const result = await profileSchema.findOneAndUpdate(
