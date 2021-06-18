@@ -135,7 +135,7 @@ module.exports = {
   },
 }
 
-function updateMessage(message){
+async function updateMessage(message){
   await mongo().then(async (mongoose) => {
     try {
       const result = await profileSchema.findOneAndUpdate(
