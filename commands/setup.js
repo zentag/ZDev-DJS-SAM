@@ -13,7 +13,7 @@ module.exports = {
     let guildId = message.guild.id
     let counter = 1
     
-    const questions = ["Guild added! Would you like to set up activity notifications? Respond with y/n", "What channel do you want notifications in? Respond with the channel or with null"]
+    const questions = ["Guild added! Would you like to set up activity notifications? Respond with y/n", "What channel do you want notifications in? Respond with the channel or with null", "What do you want the activity notification message to be? Respond with a message or null"]
     const filter = m => m.author.id === message.author.id
     const collector = new Discord.MessageCollector(message.channel, filter, {
       max: questions.length
@@ -103,7 +103,9 @@ module.exports = {
             }
           })
         }
-        
+        if(value == collected.last()){
+          updateMessage(value.content)
+        }
     })
     message.channel.send("Setup process finished! Thanks for adding us. ")
 
@@ -131,4 +133,28 @@ module.exports = {
       message.reply(embed)
     }
   },
+}
+
+function updateMessage(message){
+  await mongo().then(async (mongoose) => {
+    try {
+      const result = await profileSchema.findOneAndUpdate(
+        {
+          guildId
+        },
+        {
+          guildId,
+          $set: {
+            messageContent: message
+          }
+        },
+        {
+          upsert: true,
+          new: true,
+        }
+      )
+    } finally {
+      console.log("hell ya, mongo succeed")
+    }
+  })
 }
